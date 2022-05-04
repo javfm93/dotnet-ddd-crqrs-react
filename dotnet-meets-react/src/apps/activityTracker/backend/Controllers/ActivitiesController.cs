@@ -14,23 +14,17 @@ namespace dotnet_meets_react.Controllers
 {
     public class ActivitiesController : BaseApiController
     {
-        private readonly IMediator _mediator;
-
-        public ActivitiesController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
 
         [HttpGet]
         public async Task<ActionResult<List<Activity>>> GetActivities()
         {
-            return await _mediator.Send(new GetActivitiesQuery());
+            return await Mediator.Send(new GetActivitiesQuery());
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Activity> GetActivity(Guid id)
+        public async Task<ActionResult<Activity>> GetActivity(Guid id)
         {
-            return Ok();
+            return await Mediator.Send(new GetActivityQuery { Id = id });
         }
     }
 }

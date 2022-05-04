@@ -52,6 +52,8 @@
     <None Remove="src\contexts\activities\activities\infraestructure\" />
     <None Remove="Microsoft.EntityFrameworkCore.Sqlite" />
     <None Remove="Microsoft.EntityFrameworkCore.Design" />
+    <None Remove="src\contexts\activityTracker\activity\application\GetActivity\" />
+    <None Remove="src\contexts\activityTracker\activity\application\GetActivities\GetActivities\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -71,6 +73,8 @@
     <Folder Include="src\contexts\activityTracker\activity\application\" />
     <Folder Include="src\contexts\activityTracker\activity\domain\" />
     <Folder Include="src\contexts\activityTracker\activity\infraestructure\" />
+    <Folder Include="src\contexts\activityTracker\activity\application\GetActivities\" />
+    <Folder Include="src\contexts\activityTracker\activity\application\GetActivity\" />
   </ItemGroup>
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <!-- Ensure Node.js is installed -->
