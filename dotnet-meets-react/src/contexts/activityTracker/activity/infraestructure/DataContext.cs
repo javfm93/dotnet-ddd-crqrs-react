@@ -1,4 +1,5 @@
 ﻿using System;
+using dotnet_meets_react.src.contexts.activityTracker.activity.application.CreateActivity;
 using dotnet_meets_react.src.contexts.activityTracker.activity.domain;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,6 +10,6 @@ namespace dotnet_meets_react.src.contexts.activityTracker.activity.infraestructu
 
         public DataContext(DbContextOptions options) : base(options) {}
 
-        public DbSet<Activity> Activities { get; set; }
+        public DbSet<ActivityDTO> Activities { get; set; }
     }
 }

@@ -20,7 +20,8 @@ namespace dotnet_meets_react.src.contexts.activityTracker.activity.application
 
         public async Task<Activity> Execute(Guid guid)
         {
-            return await _context.Activities.FindAsync(guid);
+            var activityDTO = await _context.Activities.FindAsync(guid);
+            return Activity.FromPrimitives(activityDTO);
         }
     }
 }
