@@ -35,9 +35,9 @@ namespace dotnet_meets_react
 
             services.AddDbContext<DataContext>(opt => {
                 opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
-            });
+             });
 
-            services.AddMediatR(typeof(GetActivitiesQuery.Handler).Assembly);
+            services.AddMediatR(typeof(GetActivitiesQueryHandler).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
