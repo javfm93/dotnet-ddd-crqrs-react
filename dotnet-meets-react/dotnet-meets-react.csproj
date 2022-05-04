@@ -1,0 +1,101 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+    <IsPackable>false</IsPackable>
+    <SpaRoot>src\apps\activityTracker\frontend\</SpaRoot>
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
+    <RootNamespace>dotnet_meets_react</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="5.0.16" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.16" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.16">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Content Remove="$(SpaRoot)**" />
+    <None Remove="$(SpaRoot)**" />
+    <None Remove="MediatR.Extensions.Microsoft.DependencyInjection" />
+    <None Remove="src\" />
+    <None Remove="test\" />
+    <None Remove="src\apps\" />
+    <None Remove="src\contexts\" />
+    <None Remove="src\apps\activities\" />
+    <None Remove="src\apps\activities\frontend\" />
+    <None Remove="src\apps\activities\backend\" />
+    <Content Remove="src\apps\activities\frontend\public\manifest.json" />
+    <None Include="src\apps\activityTracker\frontend\public\manifest.json" />
+    <None Remove="src\apps\activities\frontend\public\" />
+    <None Remove="src\apps\activities\frontend\src\" />
+    <Content Remove="src\apps\activities\frontend\.eslintrc.json" />
+    <None Include="src\apps\activityTracker\frontend\.eslintrc.json" />
+    <Content Remove="src\apps\activities\frontend\package.json" />
+    <None Include="src\apps\activityTracker\frontend\package.json" />
+    <Content Remove="src\apps\activities\frontend\package-lock.json" />
+    <None Include="src\apps\activityTracker\frontend\package-lock.json" />
+    <Content Remove="src\apps\activities\frontend\tsconfig.json" />
+    <None Include="src\apps\activityTracker\frontend\tsconfig.json" />
+    <None Remove="src\apps\activities\backend\Controllers\" />
+    <None Remove="src\contexts\activities\" />
+    <None Remove="src\contexts\activities\activities\" />
+    <None Remove="src\contexts\activities\activities\application\" />
+    <None Remove="src\contexts\activities\activities\domain\" />
+    <None Remove="src\contexts\activities\activities\infraestructure\" />
+    <None Remove="Microsoft.EntityFrameworkCore.Sqlite" />
+    <None Remove="Microsoft.EntityFrameworkCore.Design" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="src\" />
+    <Folder Include="test\" />
+    <Folder Include="src\apps\" />
+    <Folder Include="src\contexts\" />
+    <Folder Include="src\apps\activityTracker\" />
+    <Folder Include="src\apps\activityTracker\frontend\" />
+    <Folder Include="src\apps\activityTracker\backend\" />
+    <Folder Include="src\apps\activityTracker\frontend\node_modules\" />
+    <Folder Include="src\apps\activityTracker\frontend\public\" />
+    <Folder Include="src\apps\activityTracker\frontend\src\" />
+    <Folder Include="src\apps\activityTracker\backend\Controllers\" />
+    <Folder Include="src\contexts\activityTracker\" />
+    <Folder Include="src\contexts\activityTracker\activity\" />
+    <Folder Include="src\contexts\activityTracker\activity\application\" />
+    <Folder Include="src\contexts\activityTracker\activity\domain\" />
+    <Folder Include="src\contexts\activityTracker\activity\infraestructure\" />
+  </ItemGroup>
+  <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
+    <!-- Ensure Node.js is installed -->
+    <Exec Command="node --version" ContinueOnError="true">
+      <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+    </Exec>
+    <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+    <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+  </Target>
+
+  <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
+    <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build" />
+
+    <!-- Include the newly-built files in the publish output -->
+    <ItemGroup>
+      <DistFiles Include="$(SpaRoot)build\**; $(SpaRoot)build-ssr\**" />
+      <ResolvedFileToPublish Include="@(DistFiles-&gt;'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+        <RelativePath>%(DistFiles.Identity)</RelativePath>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      </ResolvedFileToPublish>
+    </ItemGroup>
+  </Target>
+
+</Project>
