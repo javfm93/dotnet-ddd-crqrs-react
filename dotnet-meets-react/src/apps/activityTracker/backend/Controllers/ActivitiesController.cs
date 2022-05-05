@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using dotnet_meets_react.src.contexts.activityTracker.activity.application;
+using dotnet_meets_react.src.contexts.activityTracker.activity.application.CreateActivity;
 using dotnet_meets_react.src.contexts.activityTracker.activity.domain;
 using dotnet_meets_react.src.contexts.activityTracker.activity.infraestructure;
 using MediatR;
@@ -25,6 +26,12 @@ namespace dotnet_meets_react.Controllers
         public async Task<ActionResult<Activity>> GetActivity(Guid id)
         {
             return await Mediator.Send(new GetActivityQuery { Id = id });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateActivity(ActivityDTO activity)
+        {
+            return Ok(await Mediator.Send(new CreateActivityCommand { Activity = activity }));
         }
     }
 }
