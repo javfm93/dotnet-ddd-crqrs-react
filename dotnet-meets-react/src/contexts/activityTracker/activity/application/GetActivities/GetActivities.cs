@@ -10,19 +10,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace dotnet_meets_react.src.contexts.activityTracker.activity.application
 {
-    public class GetActivities : IQueryUseCaseNoArgs<Task<List<Activity>>>
+    public class GetActivities : IQueryUseCaseNoArgs<Task<Activities>>
     {
-        private readonly DataContext _context;
+        private readonly ActivityRepository _activityRepository;
 
-        public GetActivities(DataContext context)
+        public GetActivities(ActivityRepository activityRepository)
         {
-            _context = context;
+            _activityRepository = activityRepository;
         }
 
-        public async Task<List<Activity>> Execute()
-        {
-            var activities = await _context.Activities.ToListAsync();
-            return activities.Select(a => Activity.FromPrimitives(a)).ToList();
-        }
+        public Task<Activities> Execute() => _activityRepository.GetAll();
     }
 }

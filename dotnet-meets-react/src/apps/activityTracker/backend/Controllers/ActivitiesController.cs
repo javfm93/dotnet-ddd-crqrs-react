@@ -15,24 +15,34 @@ namespace dotnet_meets_react.Controllers
 {
     public class ActivitiesController : BaseApiController
     {
-
         [HttpGet]
-        public async Task<ActionResult<List<Activity>>> GetActivities()
+        public async Task<ActionResult<List<ActivityDTO>>> GetActivities()
         {
-            return await Mediator.Send(new GetActivitiesQuery());
+            var activities = await Mediator.Send(new GetActivitiesQuery());
+            return activities.ToPrimitives();
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Activity>> GetActivity(Guid id)
+        public async Task<ActionResult<ActivityDTO>> GetActivity(Guid id)
         {
-            return await Mediator.Send(new GetActivityQuery { Id = id });
+            var activity = await Mediator.Send(new GetActivityQuery { Id = id });
+            return activity.ToPrimitives();
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateActivity(Guid id, ActivityDTO activity)
+        {
+            activity.Id = id;
+            await Mediator.Send(new UpdateActivityCommand { Activity = activity });
+
+            return Ok();
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateActivity(ActivityDTO activity)
         {
-            return Ok(await Mediator.Send(new CreateActivityCommand { Activity = activity }));
+            await Mediator.Send(new CreateActivityCommand { Activity = activity });
+            return Ok();
         }
     }
 }
-

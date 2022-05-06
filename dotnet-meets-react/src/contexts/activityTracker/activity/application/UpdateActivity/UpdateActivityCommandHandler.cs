@@ -6,21 +6,21 @@ using MediatR;
 
 namespace dotnet_meets_react.src.contexts.activityTracker.activity.application.CreateActivity
 {
-    public class CreateActivityCommandHandler : IRequestHandler<CreateActivityCommand>
+    public class UpdateActivityCommandHandler : IRequestHandler<UpdateActivityCommand>
     {
-        private readonly CreateActivity _createActivity;
+        private readonly UpdateActivity _updateActivity;
 
-        public CreateActivityCommandHandler(ActivityRepository activityRepository)
+        public UpdateActivityCommandHandler(ActivityRepository activityRepository)
         {
-            _createActivity = new CreateActivity(activityRepository);
+            _updateActivity = new UpdateActivity(activityRepository);
         }
 
         public async Task<Unit> Handle(
-            CreateActivityCommand request,
+            UpdateActivityCommand request,
             CancellationToken cancellationToken
         )
         {
-            await _createActivity.Execute(request.Activity);
+            await _updateActivity.Execute(request.Activity);
             return Unit.Value;
         }
     }

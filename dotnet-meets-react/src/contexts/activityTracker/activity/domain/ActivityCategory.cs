@@ -15,7 +15,7 @@ namespace dotnet_meets_react.src.contexts.activityTracker.activity.domain
 		public static ActivityCategory Create(string value)
 		{
 			return new ActivityCategory(value);
-		}
+		}	
 
 
 		protected override IEnumerable<object> GetEqualityComponents()

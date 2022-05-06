@@ -10,9 +10,10 @@ namespace dotnet_meets_react.Migrations
 {
     public class Seed
     {
-        public static async Task InitialActivities(DataContext context)
+        public static async Task InitialActivities(Repositories repositories)
         {
-            if (context.Activities.Any()) return;
+            if (repositories.Activities.Any())
+                return;
 
             var activities = new List<ActivityDTO>
             {
@@ -118,8 +119,8 @@ namespace dotnet_meets_react.Migrations
                 }
             };
 
-            await context.Activities.AddRangeAsync(activities);
-            await context.SaveChangesAsync();
+            await repositories.Activities.AddRangeAsync(activities);
+            await repositories.SaveChangesAsync();
         }
     }
 }

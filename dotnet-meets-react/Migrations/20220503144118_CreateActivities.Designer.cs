@@ -8,7 +8,7 @@ using dotnet_meets_react.src.contexts.activityTracker.activity.infraestructure;
 
 namespace dotnet_meets_react.Migrations
 {
-    [DbContext(typeof(DataContext))]
+    [DbContext(typeof(Repositories))]
     [Migration("20220503144118_CreateActivities")]
     partial class CreateActivities
     {

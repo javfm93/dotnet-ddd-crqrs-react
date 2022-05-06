@@ -7,7 +7,7 @@ using dotnet_meets_react.src.contexts.activityTracker.activity.infraestructure;
 
 namespace dotnet_meets_react.Migrations
 {
-    [DbContext(typeof(DataContext))]
+    [DbContext(typeof(Repositories))]
     partial class DataContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

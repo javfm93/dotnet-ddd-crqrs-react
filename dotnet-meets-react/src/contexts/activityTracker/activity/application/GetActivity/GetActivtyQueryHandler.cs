@@ -13,14 +13,17 @@ namespace dotnet_meets_react.src.contexts.activityTracker.activity.application
     {
         private readonly GetActivity _getActivity;
 
-        public GetActivityQueryHandler(DataContext context)
+        public GetActivityQueryHandler(ActivityRepository activityRepository)
         {
-            _getActivity = new GetActivity(context);
+            _getActivity = new GetActivity(activityRepository);
         }
 
-        public Task<Activity> Handle(GetActivityQuery request, CancellationToken cancellationToken)
+        public async Task<Activity> Handle(
+            GetActivityQuery request,
+            CancellationToken cancellationToken
+        )
         {
-            return _getActivity.Execute(request.Id);
+            return await _getActivity.Execute(request.Id);
         }
     }
 }

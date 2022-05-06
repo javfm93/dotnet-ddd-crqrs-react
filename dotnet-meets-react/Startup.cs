@@ -1,4 +1,6 @@
 ﻿using dotnet_meets_react.src.contexts.activityTracker.activity.application;
+using dotnet_meets_react.src.contexts.activityTracker.activity.application.CreateActivity;
+using dotnet_meets_react.src.contexts.activityTracker.activity.domain;
 using dotnet_meets_react.src.contexts.activityTracker.activity.infraestructure;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -10,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Scrutor;
 
 namespace dotnet_meets_react
 {
@@ -28,16 +31,28 @@ namespace dotnet_meets_react
             services.AddControllersWithViews();
 
             // In production, the React files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "src/apps/activityTracker/frontend/build";
-            });
+            services.AddSpaStaticFiles(
+                configuration =>
+                {
+                    configuration.RootPath = "src/apps/activityTracker/frontend/build";
+                }
+            );
 
-            services.AddDbContext<DataContext>(opt => {
-                opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
-             });
+            services.AddDbContext<Repositories>(
+                opt =>
+                {
+                    opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
+                }
+            );
 
             services.AddMediatR(typeof(GetActivitiesQueryHandler).Assembly);
+            services.AddTransient<ActivityRepository>();
+
+            // services.Scan(scan => scan.AddType<IRepository>().AsSelf().WithTransientLifetime());
+            // services.Scan(
+            //     scan =>
+            //         scan.FromAssemblyOf<IRepository>().AddClasses().AsSelf().WithTransientLifetime()
+            // );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,23 +75,27 @@ namespace dotnet_meets_react
 
             app.UseRouting();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}");
-            });
-
-            app.UseSpa(spa =>
-            {
-                spa.Options.SourcePath = "src/apps/activityTracker/frontend";
-
-                if (env.IsDevelopment())
+            app.UseEndpoints(
+                endpoints =>
                 {
-                    spa.UseReactDevelopmentServer(npmScript: "start");
+                    endpoints.MapControllerRoute(
+                        name: "default",
+                        pattern: "{controller}/{action=Index}/{id?}"
+                    );
                 }
-            });
+            );
+
+            app.UseSpa(
+                spa =>
+                {
+                    spa.Options.SourcePath = "src/apps/activityTracker/frontend";
+
+                    if (env.IsDevelopment())
+                    {
+                        spa.UseReactDevelopmentServer(npmScript: "start");
+                    }
+                }
+            );
         }
     }
 }
-

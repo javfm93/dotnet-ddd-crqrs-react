@@ -1,10 +1,9 @@
 ﻿using System;
-using dotnet_meets_react.src.contexts.activityTracker.activity.application.CreateActivity;
 
 namespace dotnet_meets_react.src.contexts.activityTracker.activity.domain
 {
-	public class Activity
-	{
+    public class Activity
+    {
         public Guid Id { get; private set; }
         public ActivityTitle Title { get; private set; }
         public DateTime Date { get; private set; }
@@ -13,7 +12,15 @@ namespace dotnet_meets_react.src.contexts.activityTracker.activity.domain
         public ActivityCity City { get; private set; }
         public ActivityVenue Venue { get; private set; }
 
-        private Activity(Guid id, ActivityTitle title, DateTime date, ActivityDescription description, ActivityCategory category, ActivityCity city, ActivityVenue venue)
+        private Activity(
+            Guid id,
+            ActivityTitle title,
+            DateTime date,
+            ActivityDescription description,
+            ActivityCategory category,
+            ActivityCity city,
+            ActivityVenue venue
+        )
         {
             Id = id;
             Title = title;
@@ -24,14 +31,23 @@ namespace dotnet_meets_react.src.contexts.activityTracker.activity.domain
             Venue = venue;
         }
 
-        public static Activity Create(Guid id, ActivityTitle title, DateTime date, ActivityDescription description, ActivityCategory category, ActivityCity city, ActivityVenue venue)
+        public static Activity Create(
+            Guid id,
+            ActivityTitle title,
+            DateTime date,
+            ActivityDescription description,
+            ActivityCategory category,
+            ActivityCity city,
+            ActivityVenue venue
+        )
         {
             return new Activity(id, title, date, description, category, city, venue);
         }
 
         public ActivityDTO ToPrimitives()
         {
-            return new ActivityDTO{
+            return new ActivityDTO
+            {
                 Id = Id,
                 Title = Title.Value,
                 Date = Date,
@@ -42,6 +58,23 @@ namespace dotnet_meets_react.src.contexts.activityTracker.activity.domain
             };
         }
 
+        internal void Update(
+            ActivityTitle title,
+            DateTime date,
+            ActivityDescription description,
+            ActivityCategory category,
+            ActivityCity city,
+            ActivityVenue venue
+        )
+        {
+            Title = title;
+            Date = date;
+            Description = description;
+            Category = category;
+            City = city;
+            Venue = venue;
+        }
+
         public static Activity FromPrimitives(ActivityDTO activityDTO)
         {
             var title = ActivityTitle.Create(activityDTO.Title);
@@ -50,9 +83,15 @@ namespace dotnet_meets_react.src.contexts.activityTracker.activity.domain
             var city = ActivityCity.Create(activityDTO.City);
             var venue = ActivityVenue.Create(activityDTO.Venue);
 
-            return new Activity(activityDTO.Id, title, activityDTO.Date, description, category, city, venue);
+            return new Activity(
+                activityDTO.Id,
+                title,
+                activityDTO.Date,
+                description,
+                category,
+                city,
+                venue
+            );
         }
-
     }
-
 }

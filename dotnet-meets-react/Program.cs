@@ -15,7 +15,6 @@ namespace dotnet_meets_react
 {
     public class Program
     {
-
         public static async Task Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
@@ -24,9 +23,9 @@ namespace dotnet_meets_react
 
             try
             {
-                var context = services.GetRequiredService<DataContext>();
-                await context.Database.MigrateAsync();
-                await Seed.InitialActivities(context);
+                var repositories = services.GetRequiredService<Repositories>();
+                await repositories.Database.MigrateAsync();
+                await Seed.InitialActivities(repositories);
             }
             catch (Exception ex)
             {
@@ -39,10 +38,11 @@ namespace dotnet_meets_react
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+                .ConfigureWebHostDefaults(
+                    webBuilder =>
+                    {
+                        webBuilder.UseStartup<Startup>();
+                    }
+                );
     }
 }
-

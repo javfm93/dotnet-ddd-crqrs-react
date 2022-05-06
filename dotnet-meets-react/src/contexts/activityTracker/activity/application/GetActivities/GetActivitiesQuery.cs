@@ -9,5 +9,5 @@ using Microsoft.EntityFrameworkCore;
 
 namespace dotnet_meets_react.src.contexts.activityTracker.activity.application
 {
-    public class GetActivitiesQuery : IRequest<List<Activity>> { }
+    public class GetActivitiesQuery : IRequest<Activities> { }
 }

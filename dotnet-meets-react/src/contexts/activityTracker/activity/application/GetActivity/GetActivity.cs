@@ -11,17 +11,13 @@ namespace dotnet_meets_react.src.contexts.activityTracker.activity.application
 {
     public class GetActivity : IQueryUseCase<Guid, Task<Activity>>
     {
-        private readonly DataContext _context;
+        private readonly ActivityRepository _activityRepository;
 
-        public GetActivity(DataContext context)
+        public GetActivity(ActivityRepository activityRepository)
         {
-            _context = context;
+            _activityRepository = activityRepository;
         }
 
-        public async Task<Activity> Execute(Guid guid)
-        {
-            var activityDTO = await _context.Activities.FindAsync(guid);
-            return Activity.FromPrimitives(activityDTO);
-        }
+        public Task<Activity> Execute(Guid guid) => _activityRepository.GetByID(guid);
     }
 }

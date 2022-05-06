@@ -9,16 +9,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace dotnet_meets_react.src.contexts.activityTracker.activity.application
 {
-    public class GetActivitiesQueryHandler : IRequestHandler<GetActivitiesQuery, List<Activity>>
+    public class GetActivitiesQueryHandler : IRequestHandler<GetActivitiesQuery, Activities>
     {
         private readonly GetActivities _getActivities;
 
-        public GetActivitiesQueryHandler(DataContext context)
+        public GetActivitiesQueryHandler(ActivityRepository activityRepository)
         {
-            _getActivities = new GetActivities(context);
+            _getActivities = new GetActivities(activityRepository);
         }
 
-        public Task<List<Activity>> Handle(GetActivitiesQuery request, CancellationToken cancellationToken)
+        public Task<Activities> Handle(
+            GetActivitiesQuery request,
+            CancellationToken cancellationToken
+        )
         {
             return _getActivities.Execute();
         }

@@ -5,11 +5,11 @@ using dotnet_meets_react.src.contexts.activityTracker.activity.infraestructure;
 
 namespace dotnet_meets_react.src.contexts.activityTracker.activity.application.CreateActivity
 {
-    public class CreateActivity : ICommandUseCase<ActivityDTO>
+    public class UpdateActivity : ICommandUseCase<ActivityDTO>
     {
         private readonly ActivityRepository _activityRepository;
 
-        public CreateActivity(ActivityRepository activityRepository)
+        public UpdateActivity(ActivityRepository activityRepository)
         {
             _activityRepository = activityRepository;
         }
@@ -22,17 +22,26 @@ namespace dotnet_meets_react.src.contexts.activityTracker.activity.application.C
             var city = ActivityCity.Create(activityDTO.City);
             var venue = ActivityVenue.Create(activityDTO.Venue);
 
-            var activity = Activity.Create(
-                activityDTO.Id,
-                title,
-                activityDTO.Date,
-                description,
-                category,
-                city,
-                venue
-            );
+            var activity = await _activityRepository.GetByID(activityDTO.Id);
 
-            await _activityRepository.Create(activity);
+            if (null == activity)
+            {
+                var newActivity = Activity.Create(
+                    activityDTO.Id,
+                    title,
+                    activityDTO.Date,
+                    description,
+                    category,
+                    city,
+                    venue
+                );
+                await _activityRepository.Create(newActivity);
+            }
+            else
+            {
+                activity.Update(title, activityDTO.Date, description, category, city, venue);
+                await _activityRepository.Update(activity);
+            }
         }
     }
 }
