@@ -19,8 +19,19 @@ namespace dotnet_meets_react.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateActivity(string id, ActivityRequest activity)
         {
-            activity.Id = id;
-            var result = await Mediator.Send(new UpdateActivityCommand { Activity = activity });
+            var result = await Mediator.Send(
+                new UpdateActivityCommand
+                {
+                    Id = id,
+                    Title = activity.Title,
+                    Date = activity.Date,
+                    Description = activity.Description,
+                    Category = activity.Category,
+                    City = activity.City,
+                    Venue = activity.Venue
+                }
+            );
+
             return HandleResult(result);
         }
     }
