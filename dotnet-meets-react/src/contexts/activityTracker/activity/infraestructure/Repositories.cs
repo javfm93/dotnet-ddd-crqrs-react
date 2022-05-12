@@ -8,6 +8,6 @@ namespace dotnet_meets_react.src.contexts.activityTracker.activity.infraestructu
     {
         public Repositories(DbContextOptions options) : base(options) { }
 
-        public DbSet<ActivityDTO> Activities { get; set; }
+        public DbSet<ActivityPrimitives> Activities { get; set; }
     }
 }

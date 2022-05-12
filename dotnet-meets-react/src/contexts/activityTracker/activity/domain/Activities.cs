@@ -10,7 +10,7 @@ namespace dotnet_meets_react.src.contexts.activityTracker.activity.domain
 
         private Activities(List<Activity> activities)
         {
-            this._activities = activities;
+            _activities = activities;
         }
 
         public static Activities Create(List<Activity> activities)
@@ -18,12 +18,17 @@ namespace dotnet_meets_react.src.contexts.activityTracker.activity.domain
             return new Activities(activities);
         }
 
-        public List<ActivityDTO> ToPrimitives()
+        public List<ActivityPrimitives> ToPrimitives()
         {
             return _activities.Select(a => a.ToPrimitives()).ToList();
         }
 
-        public static Activities FromPrimitives(List<ActivityDTO> activitiesDTO)
+        public List<Activity> ToList()
+        {
+            return _activities;
+        }
+
+        public static Activities FromPrimitives(List<ActivityPrimitives> activitiesDTO)
         {
             var activities = activitiesDTO
                 .Select(activityDTO => Activity.FromPrimitives(activityDTO))

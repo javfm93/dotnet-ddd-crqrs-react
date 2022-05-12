@@ -15,9 +15,9 @@ namespace dotnet_meets_react.Migrations
             if (repositories.Activities.Any())
                 return;
 
-            var activities = new List<ActivityDTO>
+            var activities = new List<ActivityPrimitives>
             {
-                new ActivityDTO
+                new ActivityPrimitives
                 {
                     Id = Guid.NewGuid(),
                     Title = "Past Activity 1",
@@ -27,7 +27,7 @@ namespace dotnet_meets_react.Migrations
                     City = "London",
                     Venue = "Pub",
                 },
-                new ActivityDTO
+                new ActivityPrimitives
                 {
                     Id = Guid.NewGuid(),
                     Title = "Past Activity 2",
@@ -37,7 +37,7 @@ namespace dotnet_meets_react.Migrations
                     City = "Paris",
                     Venue = "Louvre",
                 },
-                new ActivityDTO
+                new ActivityPrimitives
                 {
                     Id = Guid.NewGuid(),
                     Title = "Future Activity 1",
@@ -47,7 +47,7 @@ namespace dotnet_meets_react.Migrations
                     City = "London",
                     Venue = "Natural History Museum",
                 },
-                new ActivityDTO
+                new ActivityPrimitives
                 {
                     Id = Guid.NewGuid(),
                     Title = "Future Activity 2",
@@ -57,7 +57,7 @@ namespace dotnet_meets_react.Migrations
                     City = "London",
                     Venue = "O2 Arena",
                 },
-                new ActivityDTO
+                new ActivityPrimitives
                 {
                     Id = Guid.NewGuid(),
                     Title = "Future Activity 3",
@@ -67,7 +67,7 @@ namespace dotnet_meets_react.Migrations
                     City = "London",
                     Venue = "Another pub",
                 },
-                new ActivityDTO
+                new ActivityPrimitives
                 {
                     Id = Guid.NewGuid(),
                     Title = "Future Activity 4",
@@ -77,7 +77,7 @@ namespace dotnet_meets_react.Migrations
                     City = "London",
                     Venue = "Yet another pub",
                 },
-                new ActivityDTO
+                new ActivityPrimitives
                 {
                     Id = Guid.NewGuid(),
                     Title = "Future Activity 5",
@@ -87,7 +87,7 @@ namespace dotnet_meets_react.Migrations
                     City = "London",
                     Venue = "Just another pub",
                 },
-                new ActivityDTO
+                new ActivityPrimitives
                 {
                     Id = Guid.NewGuid(),
                     Title = "Future Activity 6",
@@ -97,7 +97,7 @@ namespace dotnet_meets_react.Migrations
                     City = "London",
                     Venue = "Roundhouse Camden",
                 },
-                new ActivityDTO
+                new ActivityPrimitives
                 {
                     Id = Guid.NewGuid(),
                     Title = "Future Activity 7",
@@ -107,7 +107,7 @@ namespace dotnet_meets_react.Migrations
                     City = "London",
                     Venue = "Somewhere on the Thames",
                 },
-                new ActivityDTO
+                new ActivityPrimitives
                 {
                     Id = Guid.NewGuid(),
                     Title = "Future Activity 8",

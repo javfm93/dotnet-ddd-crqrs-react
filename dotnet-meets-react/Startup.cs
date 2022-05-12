@@ -2,6 +2,7 @@
 using dotnet_meets_react.src.contexts.activityTracker.activity.application.CreateActivity;
 using dotnet_meets_react.src.contexts.activityTracker.activity.domain;
 using dotnet_meets_react.src.contexts.activityTracker.activity.infraestructure;
+using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,7 +29,14 @@ namespace dotnet_meets_react
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services
+                .AddControllersWithViews()
+                .AddFluentValidation(
+                    config =>
+                    {
+                        config.RegisterValidatorsFromAssemblyContaining<DeleteActivityCommandHandler>();
+                    }
+                );
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(
@@ -47,6 +55,10 @@ namespace dotnet_meets_react
 
             services.AddMediatR(typeof(GetActivitiesQueryHandler).Assembly);
             services.AddTransient<ActivityRepository>();
+            services.AddTransient<UpdateActivity>();
+            services.AddTransient<GetActivities>();
+            services.AddTransient<GetActivity>();
+            services.AddTransient<DeleteActivity>();
 
             // services.Scan(scan => scan.AddType<IRepository>().AsSelf().WithTransientLifetime());
             // services.Scan(

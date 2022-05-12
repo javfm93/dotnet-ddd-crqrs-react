@@ -17,9 +17,9 @@ namespace dotnet_meets_react.src.contexts.activityTracker.activity.infraestructu
             _repositories = repositories;
         }
 
-        public async Task Create(Activity entity)
+        public async Task Delete(Activity activity)
         {
-            _repositories.Activities.Add(entity.ToPrimitives());
+            _repositories.Activities.Remove(activity.ToPrimitives());
             await _repositories.SaveChangesAsync();
         }
 
@@ -29,13 +29,17 @@ namespace dotnet_meets_react.src.contexts.activityTracker.activity.infraestructu
             return Activities.FromPrimitives(activities);
         }
 
-        public async Task<Activity> GetByID(Guid guid)
+        public async Task<Activity> GetByID(ActivityId activityId)
         {
-            var activity = await _repositories.Activities.FindAsync(guid);
+            var activity = await _repositories.Activities.FindAsync(activityId.Value);
             _repositories.Entry(activity).State = EntityState.Detached;
-            if (null == activity)
-                return null;
             return null == activity ? null : Activity.FromPrimitives(activity);
+        }
+
+        public async Task Create(Activity activity)
+        {
+            _repositories.Activities.Add(activity.ToPrimitives());
+            await _repositories.SaveChangesAsync();
         }
 
         public async Task Update(Activity activity)

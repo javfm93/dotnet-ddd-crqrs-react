@@ -4,25 +4,39 @@ namespace dotnet_meets_react.src.contexts.activityTracker.activity.domain
 {
     public class Activity
     {
-        public Guid Id { get; private set; }
+        public ActivityId Id { get; private set; }
         public ActivityTitle Title { get; private set; }
-        public DateTime Date { get; private set; }
+        public ActivityDate Date { get; private set; }
         public ActivityDescription Description { get; private set; }
         public ActivityCategory Category { get; private set; }
         public ActivityCity City { get; private set; }
         public ActivityVenue Venue { get; private set; }
 
-        private Activity(
-            Guid id,
+        private Activity(ActivityValueObjects activity)
+        {
+            Id = activity.Id;
+            Title = activity.Title;
+            Date = activity.Date;
+            Description = activity.Description;
+            Category = activity.Category;
+            City = activity.City;
+            Venue = activity.Venue;
+        }
+
+        public static Activity Create(ActivityValueObjects activity)
+        {
+            return new Activity(activity);
+        }
+
+        internal void Update(
             ActivityTitle title,
-            DateTime date,
+            ActivityDate date,
             ActivityDescription description,
             ActivityCategory category,
             ActivityCity city,
             ActivityVenue venue
         )
         {
-            Id = id;
             Title = title;
             Date = date;
             Description = description;
@@ -31,26 +45,13 @@ namespace dotnet_meets_react.src.contexts.activityTracker.activity.domain
             Venue = venue;
         }
 
-        public static Activity Create(
-            Guid id,
-            ActivityTitle title,
-            DateTime date,
-            ActivityDescription description,
-            ActivityCategory category,
-            ActivityCity city,
-            ActivityVenue venue
-        )
+        public ActivityPrimitives ToPrimitives()
         {
-            return new Activity(id, title, date, description, category, city, venue);
-        }
-
-        public ActivityDTO ToPrimitives()
-        {
-            return new ActivityDTO
+            return new ActivityPrimitives
             {
-                Id = Id,
+                Id = Id.Value,
                 Title = Title.Value,
-                Date = Date,
+                Date = Date.Value,
                 Description = Description.Value,
                 Category = Category.Value,
                 City = City.Value,
@@ -58,39 +59,27 @@ namespace dotnet_meets_react.src.contexts.activityTracker.activity.domain
             };
         }
 
-        internal void Update(
-            ActivityTitle title,
-            DateTime date,
-            ActivityDescription description,
-            ActivityCategory category,
-            ActivityCity city,
-            ActivityVenue venue
-        )
+        public static Activity FromPrimitives(ActivityPrimitives activity)
         {
-            Title = title;
-            Date = date;
-            Description = description;
-            Category = category;
-            City = city;
-            Venue = venue;
-        }
-
-        public static Activity FromPrimitives(ActivityDTO activityDTO)
-        {
-            var title = ActivityTitle.Create(activityDTO.Title);
-            var description = ActivityDescription.Create(activityDTO.Description);
-            var category = ActivityCategory.Create(activityDTO.Category);
-            var city = ActivityCity.Create(activityDTO.City);
-            var venue = ActivityVenue.Create(activityDTO.Venue);
+            var id = ActivityId.Create(activity.Id);
+            var title = ActivityTitle.Create(activity.Title);
+            var description = ActivityDescription.Create(activity.Description);
+            var category = ActivityCategory.Create(activity.Category);
+            var city = ActivityCity.Create(activity.City);
+            var venue = ActivityVenue.Create(activity.Venue);
+            var date = ActivityDate.Create(activity.Date);
 
             return new Activity(
-                activityDTO.Id,
-                title,
-                activityDTO.Date,
-                description,
-                category,
-                city,
-                venue
+                new ActivityValueObjects
+                {
+                    Id = id,
+                    Title = title,
+                    Description = description,
+                    Date = date,
+                    Category = category,
+                    City = city,
+                    Venue = venue
+                }
             );
         }
     }

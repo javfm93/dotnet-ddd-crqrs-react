@@ -2,45 +2,42 @@
 using System.Threading.Tasks;
 using dotnet_meets_react.src.contexts.activityTracker.activity.domain;
 using dotnet_meets_react.src.contexts.activityTracker.activity.infraestructure;
+using MediatR;
 
 namespace dotnet_meets_react.src.contexts.activityTracker.activity.application.CreateActivity
 {
-    public class UpdateActivity : ICommandUseCase<ActivityDTO>
+    public class UpdateActivity : ICommandUseCase<ActivityValueObjects>
     {
         private readonly ActivityRepository _activityRepository;
+        private readonly IMediator _mediator;
 
-        public UpdateActivity(ActivityRepository activityRepository)
+        public UpdateActivity(ActivityRepository activityRepository, IMediator mediator)
         {
             _activityRepository = activityRepository;
+            _mediator = mediator;
         }
 
-        public async Task Execute(ActivityDTO activityDTO)
+        public async Task Execute(ActivityValueObjects activity)
         {
-            var title = ActivityTitle.Create(activityDTO.Title);
-            var description = ActivityDescription.Create(activityDTO.Description);
-            var category = ActivityCategory.Create(activityDTO.Category);
-            var city = ActivityCity.Create(activityDTO.City);
-            var venue = ActivityVenue.Create(activityDTO.Venue);
+            var oldActivity = await _activityRepository.GetByID(activity.Id);
+            var result = await _mediator.Send(new GetActivityQuery { Id = activity.Id.Value });
 
-            var activity = await _activityRepository.GetByID(activityDTO.Id);
-
-            if (null == activity)
+            if (!result.IsSuccess && result.Error.Equals(new ActivityNotFound()))
             {
-                var newActivity = Activity.Create(
-                    activityDTO.Id,
-                    title,
-                    activityDTO.Date,
-                    description,
-                    category,
-                    city,
-                    venue
-                );
+                var newActivity = Activity.Create(activity);
                 await _activityRepository.Create(newActivity);
             }
             else
             {
-                activity.Update(title, activityDTO.Date, description, category, city, venue);
-                await _activityRepository.Update(activity);
+                oldActivity.Update(
+                    activity.Title,
+                    activity.Date,
+                    activity.Description,
+                    activity.Category,
+                    activity.City,
+                    activity.Venue
+                );
+                await _activityRepository.Update(oldActivity);
             }
         }
     }
