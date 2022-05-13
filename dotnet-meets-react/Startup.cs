@@ -1,4 +1,5 @@
-﻿using dotnet_meets_react.src.contexts.activityTracker.activity.application;
+﻿using dotnet_meets_react.Extensions;
+using dotnet_meets_react.src.contexts.activityTracker.activity.application;
 using dotnet_meets_react.src.contexts.activityTracker.activity.application.CreateActivity;
 using dotnet_meets_react.src.contexts.activityTracker.activity.infraestructure;
 using dotnet_meets_react.src.contexts.activityTracker.shared.infraestructure;
@@ -56,7 +57,7 @@ namespace dotnet_meets_react
             services.AddTransient<GetActivities>();
             services.AddTransient<GetActivity>();
             services.AddTransient<DeleteActivity>();
-
+            services.AddIdentityServices(Configuration);
             // services.Scan(scan => scan.AddType<IRepository>().AsSelf().WithTransientLifetime());
             // services.Scan(
             //     scan =>
