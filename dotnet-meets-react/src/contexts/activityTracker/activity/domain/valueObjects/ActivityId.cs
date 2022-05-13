@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using dotnet_meets_react.src.contexts.activityTracker.activity.application.Shared;
+using dotnet_meets_react.src.contexts.activityTracker.activity.domain;
 
-namespace dotnet_meets_react.src.contexts.activityTracker.activity.domain
+namespace dotnet_meets_react.src.contexts.activityTracker.shared.domain
 {
     public class ActivityId : ValueObject
     {

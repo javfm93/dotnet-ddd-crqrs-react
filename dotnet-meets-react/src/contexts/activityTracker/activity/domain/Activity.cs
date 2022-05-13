@@ -1,4 +1,5 @@
 ﻿using System;
+using dotnet_meets_react.src.contexts.activityTracker.shared.domain;
 
 namespace dotnet_meets_react.src.contexts.activityTracker.activity.domain
 {

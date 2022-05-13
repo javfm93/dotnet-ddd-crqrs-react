@@ -1,19 +1,16 @@
 ﻿using dotnet_meets_react.src.contexts.activityTracker.activity.application;
 using dotnet_meets_react.src.contexts.activityTracker.activity.application.CreateActivity;
-using dotnet_meets_react.src.contexts.activityTracker.activity.domain;
 using dotnet_meets_react.src.contexts.activityTracker.activity.infraestructure;
+using dotnet_meets_react.src.contexts.activityTracker.shared.infraestructure;
 using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Scrutor;
 
 namespace dotnet_meets_react
 {

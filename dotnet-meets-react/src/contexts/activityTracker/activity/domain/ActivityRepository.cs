@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using dotnet_meets_react.src.contexts.activityTracker.shared.domain;
 
 namespace dotnet_meets_react.src.contexts.activityTracker.activity.domain
 {

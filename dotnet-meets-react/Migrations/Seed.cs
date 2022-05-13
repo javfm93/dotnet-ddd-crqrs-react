@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using dotnet_meets_react.src.contexts.activityTracker.activity.application.CreateActivity;
 using dotnet_meets_react.src.contexts.activityTracker.activity.domain;
-using dotnet_meets_react.src.contexts.activityTracker.activity.infraestructure;
+using dotnet_meets_react.src.contexts.activityTracker.shared.infraestructure;
 
 namespace dotnet_meets_react.Migrations
 {

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using dotnet_meets_react.src.contexts.activityTracker.activity.domain;
+using dotnet_meets_react.src.contexts.activityTracker.shared.domain;
+using dotnet_meets_react.src.contexts.activityTracker.shared.infraestructure;
 using Microsoft.EntityFrameworkCore;
 
 namespace dotnet_meets_react.src.contexts.activityTracker.activity.infraestructure

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using dotnet_meets_react.src.contexts.activityTracker.activity.application.Shared;
 using dotnet_meets_react.src.contexts.activityTracker.activity.domain;
 using dotnet_meets_react.src.contexts.activityTracker.activity.infraestructure;
+using dotnet_meets_react.src.contexts.activityTracker.shared.domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

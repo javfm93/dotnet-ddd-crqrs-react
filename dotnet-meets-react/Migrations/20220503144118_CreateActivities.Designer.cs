@@ -3,8 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using dotnet_meets_react.src.contexts.activityTracker.activity.infraestructure;
+using dotnet_meets_react.src.contexts.activityTracker.shared.infraestructure;
 
 namespace dotnet_meets_react.Migrations
 {
