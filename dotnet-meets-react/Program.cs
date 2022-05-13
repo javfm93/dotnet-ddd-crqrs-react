@@ -2,7 +2,9 @@
 using System.Threading.Tasks;
 using dotnet_meets_react.Migrations;
 using dotnet_meets_react.src.contexts.activityTracker.shared.infraestructure;
+using dotnet_meets_react.src.contexts.activityTracker.user.domain;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -21,8 +23,9 @@ namespace dotnet_meets_react
             try
             {
                 var repositories = services.GetRequiredService<Repositories>();
+                var userManager = services.GetRequiredService<UserManager<User>>();
                 await repositories.Database.MigrateAsync();
-                await Seed.InitialActivities(repositories);
+                await Seed.Hidratate(repositories, userManager);
             }
             catch (Exception ex)
             {

@@ -9,15 +9,6 @@ namespace dotnet_meets_react.src.contexts.activityTracker.user.domain
         public string DisplayName { get; set; }
         public string Bio { get; set; }
 
-        private User()
-        {
-        }
-
-        public static User Create()
-        {
-            return new User();
-        }
-
         // internal void Update() {}
 
         // public UserPrimitives ToPrimitives() {}

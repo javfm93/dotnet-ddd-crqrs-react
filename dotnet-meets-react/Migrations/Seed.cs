@@ -4,12 +4,57 @@ using System.Linq;
 using System.Threading.Tasks;
 using dotnet_meets_react.src.contexts.activityTracker.activity.domain;
 using dotnet_meets_react.src.contexts.activityTracker.shared.infraestructure;
+using dotnet_meets_react.src.contexts.activityTracker.user.domain;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace dotnet_meets_react.Migrations
 {
     public class Seed
     {
-        public static async Task InitialActivities(Repositories repositories)
+        public static async Task Hidratate(Repositories repositories, UserManager<User> userManager)
+        {
+            await InitialActivities(repositories);
+            await InitialUsers(repositories, userManager);
+        }
+
+        private static async Task InitialUsers(
+            Repositories repositories,
+            UserManager<User> userManager
+        )
+        {
+            if (repositories.Users.Any())
+                return;
+
+            var users = new List<User>
+            {
+                new User
+                {
+                    DisplayName = "Bob",
+                    UserName = "bob",
+                    Email = "bob@test.com"
+                },
+                new User
+                {
+                    DisplayName = "Tom",
+                    UserName = "tom",
+                    Email = "tom@test.com"
+                },
+                new User
+                {
+                    DisplayName = "Jane",
+                    UserName = "jane",
+                    Email = "jane@test.com"
+                },
+            };
+
+            foreach (var user in users)
+            {
+                await userManager.CreateAsync(user, "Pa$$0rd");
+            }
+        }
+
+        private static async Task InitialActivities(Repositories repositories)
         {
             if (repositories.Activities.Any())
                 return;
