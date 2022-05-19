@@ -57,7 +57,7 @@ namespace dotnet_meets_react
             services.AddTransient<GetActivities>();
             services.AddTransient<GetActivity>();
             services.AddTransient<DeleteActivity>();
-            services.AddIdentityServices(Configuration);
+            services.AddIdentityServices();
             // services.Scan(scan => scan.AddType<IRepository>().AsSelf().WithTransientLifetime());
             // services.Scan(
             //     scan =>
@@ -84,6 +84,8 @@ namespace dotnet_meets_react
             app.UseSpaStaticFiles();
 
             app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(
                 endpoints =>

@@ -13,11 +13,17 @@ namespace dotnet_meets_react.Controllers
     {
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
+        private readonly TokenService _tokenService;
 
-        public UsersController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public UsersController(
+            UserManager<User> userManager,
+            SignInManager<User> signInManager,
+            TokenService tokenService
+        )
         {
             _signInManager = signInManager;
             _userManager = userManager;
+            _tokenService = tokenService;
         }
 
         [HttpPost("login")]
@@ -32,7 +38,7 @@ namespace dotnet_meets_react.Controllers
                 {
                     DisplayName = user.DisplayName,
                     Image = null,
-                    Token = "THis will be a token",
+                    Token = _tokenService.CreateToken(user),
                     Username = user.UserName
                 }
               : Unauthorized();
