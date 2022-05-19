@@ -17,7 +17,7 @@ namespace dotnet_meets_react.Controllers
     public class GetActivitiesController : BaseApiController
     {
         [HttpGet]
-        public async Task<ActionResult<List<ActivityPrimitives>>> GetActivities()
+        public async Task<ActionResult<List<ActivityResponse>>> GetActivities()
         {
             var result = await Mediator.Send(new GetActivitiesQuery());
             return HandleResult(result);
