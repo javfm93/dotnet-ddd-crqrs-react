@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Security.Claims;
+using System.Threading.Tasks;
 using dotnet_meets_react.src.apps.activityTracker.backend.Controllers.Users;
 using dotnet_meets_react.src.contexts.activityTracker.user.application;
 using dotnet_meets_react.src.contexts.activityTracker.user.domain;
@@ -36,15 +37,7 @@ namespace dotnet_meets_react.Controllers
             if (null == user)
                 return Unauthorized();
             var result = await _signInManager.CheckPasswordSignInAsync(user, login.Password, false);
-            return result.Succeeded
-              ? new UserResponse
-                {
-                    DisplayName = user.DisplayName,
-                    Image = null,
-                    Token = _tokenService.CreateToken(user),
-                    Username = user.UserName
-                }
-              : Unauthorized();
+            return result.Succeeded ? MapToUserResponseFrom(user) : Unauthorized();
         }
 
         [HttpPost("register")]
@@ -64,17 +57,28 @@ namespace dotnet_meets_react.Controllers
             };
 
             var result = await _userManager.CreateAsync(user, registration.Password);
-            if (result.Succeeded)
+            return result.Succeeded
+              ? MapToUserResponseFrom(user)
+              : BadRequest("Problem registering user");
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<ActionResult<UserResponse>> GetCurrentUser()
+        {
+            var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
+            return MapToUserResponseFrom(user);
+        }
+
+        private UserResponse MapToUserResponseFrom(User user)
+        {
+            return new UserResponse
             {
-                return new UserResponse
-                {
-                    DisplayName = user.DisplayName,
-                    Image = null,
-                    Token = _tokenService.CreateToken(user),
-                    Username = user.UserName
-                };
-            }
-            return BadRequest("Problem registering user");
+                DisplayName = user.DisplayName,
+                Image = null,
+                Token = _tokenService.CreateToken(user),
+                Username = user.UserName
+            };
         }
     }
 }
