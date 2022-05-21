@@ -8,7 +8,6 @@ namespace dotnet_meets_react.Controllers
 {
     public class GetActivityController : BaseApiController
     {
-        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<ActivityResponse>> GetActivity(string id)
         {

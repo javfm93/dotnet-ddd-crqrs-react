@@ -5,8 +5,10 @@ using dotnet_meets_react.src.contexts.activityTracker.activity.infraestructure;
 using dotnet_meets_react.src.contexts.activityTracker.shared.infraestructure;
 using FluentValidation.AspNetCore;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -28,7 +30,15 @@ namespace dotnet_meets_react
         public void ConfigureServices(IServiceCollection services)
         {
             services
-                .AddControllersWithViews()
+                .AddControllersWithViews(
+                    opt =>
+                    {
+                        var policy = new AuthorizationPolicyBuilder()
+                            .RequireAuthenticatedUser()
+                            .Build();
+                        opt.Filters.Add(new AuthorizeFilter(policy));
+                    }
+                )
                 .AddFluentValidation(
                     config =>
                     {

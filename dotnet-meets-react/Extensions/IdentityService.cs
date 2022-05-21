@@ -12,13 +12,16 @@ namespace dotnet_meets_react.Extensions
 {
     public static class IdentityService
     {
-        public static IServiceCollection AddIdentityServices(this IServiceCollection services)
+        public static IServiceCollection AddIdentityServices(
+            this IServiceCollection services,
+            IConfiguration configuration
+        )
         {
             services
                 .AddIdentityCore<User>()
                 .AddEntityFrameworkStores<Repositories>()
                 .AddSignInManager<SignInManager<User>>();
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("super secret key"));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["TokenKey"]));
             services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(
