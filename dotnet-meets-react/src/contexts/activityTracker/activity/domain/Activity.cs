@@ -1,5 +1,6 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using dotnet_meets_react.src.contexts.activityTracker.shared.domain;
+using dotnet_meets_react.src.contexts.activityTracker.user.domain;
 
 namespace dotnet_meets_react.src.contexts.activityTracker.activity.domain
 {
@@ -12,6 +13,8 @@ namespace dotnet_meets_react.src.contexts.activityTracker.activity.domain
         public ActivityCategory Category { get; private set; }
         public ActivityCity City { get; private set; }
         public ActivityVenue Venue { get; private set; }
+        public User Host { get; private set; }
+        public ICollection<User> Attendees { get; private set; }
 
         private Activity(ActivityValueObjects activity)
         {
@@ -22,6 +25,8 @@ namespace dotnet_meets_react.src.contexts.activityTracker.activity.domain
             Category = activity.Category;
             City = activity.City;
             Venue = activity.Venue;
+            Host = activity.Host;
+            Attendees = activity.Attendees;
         }
 
         public static Activity Create(ActivityValueObjects activity)
@@ -56,7 +61,9 @@ namespace dotnet_meets_react.src.contexts.activityTracker.activity.domain
                 Description = Description.Value,
                 Category = Category.Value,
                 City = City.Value,
-                Venue = Venue.Value
+                Venue = Venue.Value,
+                Host = Host,
+                Attendees = Attendees,
             };
         }
 
@@ -79,7 +86,9 @@ namespace dotnet_meets_react.src.contexts.activityTracker.activity.domain
                     Date = date,
                     Category = category,
                     City = city,
-                    Venue = venue
+                    Venue = venue,
+                    Host = activity.Host,
+                    Attendees = activity.Attendees
                 }
             );
         }
